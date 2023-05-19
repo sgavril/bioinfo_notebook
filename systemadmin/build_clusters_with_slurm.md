@@ -44,7 +44,7 @@ sudo chmod 400 /etc/munge/munge.key
 ### Copy all munge.key to all the nodes and make sure to set the correct ownership and mode on all nodes:
 
 ```
-cp -p /nfs/APL_Genomics/munge.key /etc/munge/
+cp -p /your_path_to/munge.key /etc/munge/
 mkdir /var/log/munge
 chown munge: /etc/munge/munge.key
 chmod 400 /etc/munge/munge.key
@@ -129,7 +129,7 @@ sudo touch /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
 sudo chown slurm: /var/log/slurm_jobacct.log /var/log/slurm_jobcomp.log
 
 
-#we are doing Configless Slurm setup by adding "SlurmctldParameters=enable_configles" to the slurm.conf
+#we are doing Configless Slurm setup by adding "SlurmctldParameters=enable_configless" to the slurm.conf
 #https://slurm.schedmd.com/configless_slurm.html
 
 
@@ -138,9 +138,20 @@ systemctl enable slurmctld
 systemctl enable slurmdbd
 systemctl start slurmctld.service
 ```
-
+## Update the slurm.conf file
+When the slurm.conf file is updated, please run the following command to instruct all Slurm daemons to re-read the configuration file
+```
+scontrol reconfigure
+```
+Otherwise, you will get the below error message
+```
+error: Node xxx appears to have a different slurm.conf than the slurmctld.
+```
 # Install and configure slurm on all the computing nodes
 ```
+# make a copy of the slurm rpm build from the head node before start
+cd ~/rpmbuild/RPMS/x86_64/
+
 # isntall slurm
 yum --nogpgcheck localinstall slurm-22.05.5-1.el8.x86_64.rpm slurm-contribs-22.05.5-1.el8.x86_64.rpm slurm-devel-22.05.5-1.el8.x86_64.rpm slurm-example-configs-22.05.5-1.el8.x86_64.rpm  slurm-libpmi-22.05.5-1.el8.x86_64.rpm  slurm-openlava-22.05.5-1.el8.x86_64.rpm slurm-pam_slurm-22.05.5-1.el8.x86_64.rpm  slurm-perlapi-22.05.5-1.el8.x86_64.rpm  slurm-slurmctld-22.05.5-1.el8.x86_64.rpm  slurm-slurmd-22.05.5-1.el8.x86_64.rpm slurm-slurmdbd-22.05.5-1.el8.x86_64.rpm slurm-torque-22.05.5-1.el8.x86_64.rpm -y
 
