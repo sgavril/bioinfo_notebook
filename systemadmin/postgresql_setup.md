@@ -28,6 +28,12 @@ Then for that database run the following:
 
 `ALTER DATABASE <db_name> OWNER TO <username>; `
 
+## Switching databases between settings
+Set an environment variable using:
+```
+export DJANGO_SETTINGS_MODULE=config.settings.local
+```
+
 ## Making a backup of the database
 Can just do `pg_dump > backup.sql` , or can compress output: `pg_dump --format=custom > backup.pgdump`
 
@@ -35,10 +41,32 @@ Can just do `pg_dump > backup.sql` , or can compress output: `pg_dump --format=c
 TODO
 
 ## Reset the database
-Irreversible: `python manage.py reset_db` then confirm yes. Requires `django-extensions` which should be installed and added to Django settings `INSTALLED_APPS`.
+If you just want to reset all of the data (but keep migrations), then simply run `python manage.py django-admin flush`  
+
+Nuclear option (Irreversible): `python manage.py reset_db` then confirm yes. Requires `django-extensions` which should be installed and added to Django settings `INSTALLED_APPS`.
 
 ## Automating database backups
 TODO
+
+## Using pgadmin4
+If you get: 
+```
+ERROR  : Failed to create the directory /var/lib/pgadmin/sessions:
+           [Errno 13] Permission denied: '/var/lib/pgadmin/sessions'
+HINT   : Create the directory /var/lib/pgadmin/sessions, ensure it is writeable by
+```
+
+One solution is to make the following:
+```
+sudo mkdir -p /var/lib/pgadmin/sessions
+sudo chown -R $USER:$USER /var/lib/pgadmin/sessions
+sudo chmod -R 700 /var/lib/pgadmin/sessions
+```
+
+Alternatively, create a config_local.py file and include fields as needed:
+```
+SESSION_DB_PATH = '/var/lib/pgadmin/sessions'
+```
 
 ## Sources
 - Peer authentication error
