@@ -17,6 +17,16 @@ to:
 and restart the service:
 `sudo systemctl restart postgresql`.
 
+## Create config_local.py
+Do this so you do not need sudo access to certain folders. Within the venv, make a file like below:
+`
+DB_NAME='dbname'
+DB_USER='databaseuser'
+DB_PASSWORD='password'
+DB_HOST='127.0.0.1'
+DB_PORT='5432'
+`
+
 ## Creating a database with sufficient privileges 
 First create a database using `CREATE DATABASE <db_name>;`
 
