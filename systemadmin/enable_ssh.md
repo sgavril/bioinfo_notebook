@@ -14,8 +14,8 @@ cat /var/log/auth.log
 
 cat /etc/ssh/sshd_config
 
-cat ~/.ssh # Should be 700
-cat ~/.ssh/authorized_keys # Should be 600
+ls -l ~/.ssh # Should be 700
+ls -l ~/.ssh/authorized_keys # Should be 600
 ```
 
 ### After making changes
