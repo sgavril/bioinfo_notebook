@@ -172,3 +172,25 @@ Then, I changed "User=minkow Group=minknow" to "User=root Group=root". After res
 
 # Troubleshooting reference
 (GPU Calling in MinKNOW)[https://gringer.gitlab.io/presentation-notes/2021/10/08/gpu-calling-in-minknow/]
+
+# Install MinKnow 23.07.5
+This version of the minknow integrated Dorado into the MinKNOW
+
+```
+apt-get purge ont-*
+apt-get autoremove
+```
+
+For Ubuntu20 to add the Oxford Nanopore apt repository, run the command below on a terminal window:
+```
+sudo apt update
+sudo apt install wget
+wget -O- https://cdn.oxfordnanoportal.com/apt/ont-repo.pub | sudo apt-key add -
+echo "deb http://cdn.oxfordnanoportal.com/apt focal-stable non-free" | sudo tee /etc/apt/sources.list.d/nanoporetech.sources.list
+```
+Install GPU version of the MinKNOW using the command:
+```
+sudo apt update
+sudo apt install ont-standalone-minknow-gpu-release
+```
+
